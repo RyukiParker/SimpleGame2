@@ -6,8 +6,23 @@
  *
  */
 class Main{
+
+    /**
+     * The amount of times you want to shuffle the deck.
+     */
+    public static final int SHUFFLE_COUNT = 1;
+
     public static void main(String[] args) {
-        Game game = new Game();
+        Deck deck = new Deck();
+        deck.shuffle(SHUFFLE_COUNT);
+        Game game = new Game(deck);
+
+        // Start game
         game.start();
+
+        // Start getting input from the players.
+        game.playPlayers();
+
+        Player winner = game.findWinner();
     }
 }

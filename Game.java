@@ -10,26 +10,20 @@ public class Game {
   private int pot = 0;
 
   private ArrayList<Player> players = new ArrayList<Player>();
-  private ArrayList<Card> deck = new ArrayList<Card>();
-  private final Suite[] suites = new Suite[] { Suite.CLUB, Suite.DIAMOND, Suite.HEART, Suite.SPADE };
+  private Deck deck;
 
   /**
    * This constructor will populate the deck.
+   * @param deck The deck you want to use with the game
    */
-  public Game() {
-    for (int i = 0; i < 4; i++) {
-      for (int j = 0; j < 13; j++) {
-        deck.add(new Card(j, suites[i]));
-      }
-    }
+  public Game(Deck deck) {
+    this.deck = deck;
   }
 
-  public void debugCards() {
-    deck.forEach(card -> {
-      System.out.println(card);
-    });
-  }
 
+  /**
+   * This method starts the game and walks through the general game logic.
+   */
   public void start() {
     int playerCount = 0;
 
@@ -54,17 +48,18 @@ public class Game {
     }
     System.out.println();
     this.registerPlayers(playerCount);
-    this.playPlayers();
-    this.findWinner();
+
   }
 
   /**
    * Finds the person with the highest card.
+   * @return winner The player who won the game.
    */
-  public void findWinner() {
+  public Player findWinner() {
     Card high = this.players.get(0).getCard();
     Player winner = this.players.get(0);
 
+    // Check for high cards
     for (int i = 1; i < this.players.size(); i++) {
       Player player = this.players.get(i);
       if (player.getCard().getValue() > high.getValue()) {
@@ -75,7 +70,7 @@ public class Game {
 
     System.out.println();
     System.out.println(winner.getName() + " won with a " + high.toString() + "!");
-
+    return winner;
   }
 
   /**
@@ -90,10 +85,9 @@ public class Game {
       Scanner userIn = new Scanner(System.in);
 
       Player player = new Player(userIn.next());
-      Random rand = new Random();
-      Card card = deck.get(rand.nextInt(deck.size()));
-      player.setCard(card);
-      deck.remove(card);
+
+      player.setCard(deck.getRandomCard());
+
       this.players.add(player);
 
     }
@@ -102,7 +96,7 @@ public class Game {
   /**
    * This class controls the actually players actions
    */
-  private void playPlayers() {
+  public void playPlayers() {
     this.players.forEach(player -> {
       Scanner userIn = new Scanner(System.in);
       System.out.println(player.getName() + ", it is your turn!");
@@ -113,7 +107,7 @@ public class Game {
         System.out.print("Your options are to (b)et, (v)iew card, (c)ontinue to next player, or (f)old: ");
 
         char response = userIn.next().charAt(0);
-
+        // Switch between various responses.
         switch (response) {
           case 'b':
             this.addBet(player);
