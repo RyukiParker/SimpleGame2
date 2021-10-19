@@ -69,7 +69,7 @@ public class Game {
     }
 
     System.out.println();
-    System.out.println(winner.getName() + " won with a " + high.toString() + "!");
+    System.out.println(winner.getName() + " won with a " + high.toString() + "! They won $"+this.pot);
     return winner;
   }
 
@@ -104,7 +104,7 @@ public class Game {
       boolean isPlaying = true;
 
       while (isPlaying) {
-        System.out.print("Your options are to (b)et, (v)iew card, (c)ontinue to next player, or (f)old: ");
+        System.out.print("Your options are to (b)et, (v)iew card, or (c)ontinue to the next player: ");
 
         char response = userIn.next().charAt(0);
         // Switch between various responses.
@@ -123,7 +123,7 @@ public class Game {
             break;
           default:
             System.out.println(
-                "Please enter \"b\" for betting, \"v\" for viewing your card, \"c\" to continue to the next player, or \"f\" for folding.");
+                "Please enter \"b\" for betting, \"v\" for viewing your card, or \"c\" to continue to the next player: ");
             break;
         }
       }
@@ -135,6 +135,9 @@ public class Game {
     });
   }
 
+  /**
+  * Adds a bet to the pot.
+  */
   private void addBet(Player player) {
     this.pot += player.getBet();
   }

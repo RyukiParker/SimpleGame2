@@ -17,6 +17,8 @@ class Main{
         deck.shuffle(SHUFFLE_COUNT);
         Game game = new Game(deck);
 
+        //System.out.println(deck.toString());
+
         // Start game
         game.start();
 

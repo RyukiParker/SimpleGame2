@@ -10,6 +10,10 @@ public class Player {
         this.name = name;
     }
 
+    /**
+    * Get the players name.
+    * @return The players name
+    */
     public String getName(){
         return this.name;
     }
@@ -22,18 +26,29 @@ public class Player {
         this.card = card;
     }
 
+    /**
+    * Outputs the players card to the console.
+    */
     public void viewCard(){
-        System.out.println("You currently have: "+this.card.toString());
+        System.out.println("You currently have a "+this.card.toString());
     }
 
+    /**
+    * Gets the players card
+    * @return The players card
+    */
     public Card getCard() {
         return card;
     }
 
+    /**
+    * Ask the player for the amount of money they would like to bet.
+    * @return The amount they want to bet.
+    */
     public int getBet(){
       Scanner userIn = new Scanner(System.in);
       while(true){
-        System.out.print("Your balance is $"+this.balance+". How much would you like to bet? ");
+        System.out.print("Your balance is $"+this.balance+". How much would you like to bet? $");
         if(userIn.hasNextInt()){
           int bet = userIn.nextInt();
           if(this.balance >= bet){
